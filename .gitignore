@@ -1,0 +1,48 @@
+# Build directories
+build/
+tmp/
+
+# IDE / Editor
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Compiled binaries
+*.exe
+*.sph
+*.dll
+*.lib
+*.exp
+*.obj
+*.pdb
+*.ilk
+
+# Test files
+*.bmp
+*.pdf
+*.eps
+*.ai
+*.ps
+
+# Debug and logs
+*.log
+
+# User-specific
+.claude/
+.serena/
+
+# Test directory
+test/
+
+# Temporary files
+*.tmp
+
+# Per-plugin runtime config (each user creates their own; not version-controlled)
+*.ini
+
+# Windows
+Thumbs.db
+Desktop.ini
