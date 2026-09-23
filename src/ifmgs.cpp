@@ -12,7 +12,7 @@
 
 namespace {
 
-const char* kInfoA[] = { "00IN", "PostScript/EPS Plug-in Version 0.1 (C) mtkhs", "*.ps;*.eps", "PostScript (*.ps);EPS (*.eps)" };
+const char* kInfoA[] = { "00IN", "PostScript/EPS Plug-in Version 0.2 (C) mtkhs", "*.ps;*.eps", "PostScript (*.ps);EPS (*.eps)" };
 constexpr int kInfoCount = 4;
 
 int IsSupportedImpl(const char* filename_utf8, const void* dw)

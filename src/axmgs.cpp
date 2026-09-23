@@ -11,7 +11,7 @@
 
 namespace {
 
-const char* kInfoA[] = { "00AX", "PDF Pages Archive Plug-in Version 0.1 (C) mtkhs", "*.pdf;*.ai", "PDF/AI Archive (*.pdf;*.ai)" };
+const char* kInfoA[] = { "00AX", "PDF Pages Archive Plug-in Version 0.2 (C) mtkhs", "*.pdf;*.ai", "PDF/AI Archive (*.pdf;*.ai)" };
 constexpr int kInfoCount = 4;
 
 constexpr size_t kBmpHeaderSize = 54;  // BITMAPFILEHEADER + BITMAPINFOHEADER
