@@ -18,7 +18,7 @@ bool IsEPIF(const char* header, size_t size) {
 bool IsPostScriptExtension(const std::string& ext) {
 	std::string lower = ext;
 	std::transform(lower.begin(), lower.end(), lower.begin(),
-				   [](unsigned char c) { return std::tolower(c); });
+				   [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 	return lower == "ps" || lower == "eps" || lower == "epsf" || lower == "epsi";
 }
 

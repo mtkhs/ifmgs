@@ -1,0 +1,11 @@
+EXPORTS
+    GetPluginInfo
+    GetPluginInfoW
+    IsSupported
+    IsSupportedW
+    GetArchiveInfo
+    GetArchiveInfoW
+    GetFileInfo
+    GetFileInfoW
+    GetFile
+    GetFileW

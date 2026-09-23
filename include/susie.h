@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
-	Susie Plug-in ŠÖ˜A‚Ì’è‹`			Copyright (c) TORO 2025
+	Susie Plug-in é–¢é€£ã®å®šç¾©			Copyright (c) TORO 2025
  ----------------------------------------------------------------------------*/
-// ƒGƒ‰[’è‹`
+// ã‚¨ãƒ©ãƒ¼å®šç¾©
 #define SUSIEERROR_NOERROR       0
 #define SUSIEERROR_NOTSUPPORT   -1
 #define SUSIEERROR_USERCANCEL    1
@@ -10,12 +10,12 @@
 #define SUSIEERROR_EMPTYMEMORY   4
 #define SUSIEERROR_FAULTMEMORY   5
 #define SUSIEERROR_FAULTREAD     6
-#define SUSIEERROR_RESERVED      7 // Susie “à•”‚Å‚Í Window ŠÖŒW
+#define SUSIEERROR_RESERVED      7 // Susie å†…éƒ¨ã§ã¯ Window é–¢ä¿‚
 #define SUSIEERROR_INTERNAL      8
-#define SUSIEERROR_FILEWRITE     9 // Susie “à•”‚Åg—p
-#define SUSIEERROR_EOF           10 // Susie “à•”‚Åg—p
+#define SUSIEERROR_FILEWRITE     9 // Susie å†…éƒ¨ã§ä½¿ç”¨
+#define SUSIEERROR_EOF           10 // Susie å†…éƒ¨ã§ä½¿ç”¨
 
-// flag ’è‹`
+// flag å®šç¾©
 #define SUSIE_SOURCE_MASK 7
 #define SUSIE_SOURCE_DISK 0
 #define SUSIE_SOURCE_MEM 1
@@ -26,66 +26,66 @@
 #define SUSIE_DEST_REJECT_UNKNOWN_TYPE 0x800
 #define SUSIE_DEST_EXTRA_OPTION 0x1000
 
-// ‚»‚Ì‘¼’è‹`
+// ãã®ä»–å®šç¾©
 #define SUSIE_CHECK_SIZE (2 * 1024)
 #define SUSIE_PATH_MAX 200
 
-// ƒR[ƒ‹ƒoƒbƒN
+// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 typedef int (__stdcall *SUSIE_PROGRESS)(int nNum, int nDenom, LONG_PTR lData);
 
-// Susie —p‚Ì UNIX 
+// Susie ç”¨ã® UNIX æ™‚åˆ»
 typedef ULONG_PTR susie_time_t;
 
-// ‰æ‘œŠÖŒW\‘¢‘Ì
+// ç”»åƒé–¢ä¿‚æ§‹é€ ä½“
 #pragma pack(push,1)
 typedef struct PictureInfo {
-	long   left, top;  // ‰æ‘œ‚ğ“WŠJ‚·‚éˆÊ’u
-	long   width;      // ‰æ‘œ‚Ì•(pixel)
-	long   height;     // ‰æ‘œ‚Ì‚‚³(pixel)
-	WORD   x_density;  // ‰æ‘f‚Ì…•½•ûŒü–§“x
-	WORD   y_density;  // ‰æ‘f‚Ì‚’¼•ûŒü–§“x
-	short  colorDepth; // ‚P‰æ‘f“–‚½‚è‚Ìbit”
+	long   left, top;  // ç”»åƒã‚’å±•é–‹ã™ã‚‹ä½ç½®
+	long   width;      // ç”»åƒã®å¹…(pixel)
+	long   height;     // ç”»åƒã®é«˜ã•(pixel)
+	WORD   x_density;  // ç”»ç´ ã®æ°´å¹³æ–¹å‘å¯†åº¦
+	WORD   y_density;  // ç”»ç´ ã®å‚ç›´æ–¹å‘å¯†åº¦
+	short  colorDepth; // ï¼‘ç”»ç´ å½“ãŸã‚Šã®bitæ•°
 #ifdef _WIN64
-	char   dummy[2];   // ƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	char   dummy[2];   // ã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 #endif
-	HLOCAL hInfo;      // ‰æ‘œ“à‚ÌƒeƒLƒXƒgî•ñ
+	HLOCAL hInfo;      // ç”»åƒå†…ã®ãƒ†ã‚­ã‚¹ãƒˆæƒ…å ±
 } SUSIE_PICTUREINFO;
 
-// ‘ŒÉŠÖŒW\‘¢‘Ì
+// æ›¸åº«é–¢ä¿‚æ§‹é€ ä½“
 typedef struct fileInfo {
-	unsigned char  method[8];  // ˆ³k–@‚Ìí—Ş
-	ULONG_PTR      position;   // ƒtƒ@ƒCƒ‹ã‚Å‚ÌˆÊ’u
-	ULONG_PTR      compsize;   // ˆ³k‚³‚ê‚½ƒTƒCƒY
-	ULONG_PTR      filesize;   // Œ³‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY
-	susie_time_t   timestamp;  // ƒtƒ@ƒCƒ‹‚ÌXV“ú
-	char           path[SUSIE_PATH_MAX]; // ‘Š‘ÎƒpƒX
-	char           filename[SUSIE_PATH_MAX]; // ƒtƒ@ƒCƒ‹–¼
+	unsigned char  method[8];  // åœ§ç¸®æ³•ã®ç¨®é¡
+	ULONG_PTR      position;   // ãƒ•ã‚¡ã‚¤ãƒ«ä¸Šã§ã®ä½ç½®
+	ULONG_PTR      compsize;   // åœ§ç¸®ã•ã‚ŒãŸã‚µã‚¤ã‚º
+	ULONG_PTR      filesize;   // å…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
+	susie_time_t   timestamp;  // ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›´æ–°æ—¥æ™‚
+	char           path[SUSIE_PATH_MAX]; // ç›¸å¯¾ãƒ‘ã‚¹
+	char           filename[SUSIE_PATH_MAX]; // ãƒ•ã‚¡ã‚¤ãƒ«å
 	unsigned long  crc; // CRC
 #ifdef _WIN64
-	   // 64bit”Å‚Ì\‘¢‘ÌƒTƒCƒY‚Í444bytes‚Å‚·‚ªAÀÛ‚ÌƒTƒCƒY‚Í
-	   // ƒAƒ‰ƒCƒ“ƒƒ“ƒg‚É‚æ‚è448bytes‚É‚È‚è‚Ü‚·BŠÂ‹«‚É‚æ‚èdummy‚ª•K—v‚Å‚·B
-	char dummy[4]; // ƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	   // 64bitç‰ˆã®æ§‹é€ ä½“ã‚µã‚¤ã‚ºã¯444bytesã§ã™ãŒã€å®Ÿéš›ã®ã‚µã‚¤ã‚ºã¯
+	   // ã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆã«ã‚ˆã‚Š448bytesã«ãªã‚Šã¾ã™ã€‚ç’°å¢ƒã«ã‚ˆã‚ŠdummyãŒå¿…è¦ã§ã™ã€‚
+	char dummy[4]; // ã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 #endif
 } SUSIE_FINFO;
 
 typedef struct fileInfoW {
-	unsigned char  method[8]; // ˆ³k–@‚Ìí—Ş
-	ULONG_PTR      position;  // ƒtƒ@ƒCƒ‹ã‚Å‚ÌˆÊ’u
-	ULONG_PTR      compsize;  // ˆ³k‚³‚ê‚½ƒTƒCƒY
-	ULONG_PTR      filesize;  // Œ³‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY
-	susie_time_t   timestamp; // ƒtƒ@ƒCƒ‹‚ÌXV“ú
-	WCHAR          path[SUSIE_PATH_MAX]; // ‘Š‘ÎƒpƒX
-	WCHAR          filename[SUSIE_PATH_MAX]; // ƒtƒ@ƒCƒ‹–¼
+	unsigned char  method[8]; // åœ§ç¸®æ³•ã®ç¨®é¡
+	ULONG_PTR      position;  // ãƒ•ã‚¡ã‚¤ãƒ«ä¸Šã§ã®ä½ç½®
+	ULONG_PTR      compsize;  // åœ§ç¸®ã•ã‚ŒãŸã‚µã‚¤ã‚º
+	ULONG_PTR      filesize;  // å…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
+	susie_time_t   timestamp; // ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›´æ–°æ—¥æ™‚
+	WCHAR          path[SUSIE_PATH_MAX]; // ç›¸å¯¾ãƒ‘ã‚¹
+	WCHAR          filename[SUSIE_PATH_MAX]; // ãƒ•ã‚¡ã‚¤ãƒ«å
 	unsigned long  crc; // CRC
 #ifdef _WIN64
-	   // 64bit”Å‚Ì\‘¢‘ÌƒTƒCƒY‚Í844bytes‚Å‚·‚ªAÀÛ‚ÌƒTƒCƒY‚Í
-	   // ƒAƒ‰ƒCƒ“ƒƒ“ƒg‚É‚æ‚è848bytes‚É‚È‚è‚Ü‚·BŠÂ‹«‚É‚æ‚èdummy‚ª•K—v‚Å‚·B
-	char dummy[4]; // ƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	   // 64bitç‰ˆã®æ§‹é€ ä½“ã‚µã‚¤ã‚ºã¯844bytesã§ã™ãŒã€å®Ÿéš›ã®ã‚µã‚¤ã‚ºã¯
+	   // ã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆã«ã‚ˆã‚Š848bytesã«ãªã‚Šã¾ã™ã€‚ç’°å¢ƒã«ã‚ˆã‚ŠdummyãŒå¿…è¦ã§ã™ã€‚
+	char dummy[4]; // ã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 #endif
 } SUSIE_FINFOW;
 #pragma pack(pop)
-//-------------------------------------- API ’è‹`
-#if 0 // ’è‹`ˆê——
+//-------------------------------------- API å®šç¾©
+#if 0 // å®šç¾©ä¸€è¦§
 int __stdcall GetPluginInfo(int infono, LPSTR buf, int buflen);
 int __stdcall GetPluginInfoW(int infono, LPWSTR buf, int buflen);
 int __stdcall IsSupported(LPCSTR filename, const void *dw);
@@ -103,11 +103,11 @@ int __stdcall GetFile(LPCSTR src, LONG_PTR len, LPSTR dest, unsigned int flag, S
 int __stdcall GetFileW(LPCWSTR src, LONG_PTR len, LPWSTR dest, unsigned int flag, SUSIE_PROGRESS prgressCallback, LONG_PTR lData);
 int __stdcall GetFileInfo(LPCSTR buf, LONG_PTR len, LPCSTR filename, unsigned int flag, SUSIE_FINFO *lpInfo);
 int __stdcall GetFileInfoW(LPCWSTR buf, LONG_PTR len, LPCWSTR filename, unsigned int flag, SUSIE_FINFOW *lpInfo);
-int __stdcall CreatePicture(LPCSTR filepath, unsigned int flag, HLOCAL *pHBInfo, HLOCAL *pHBm, struct PictureInfo *lpInfo, SUSIE_PROGRESS progressCallback, LONG_PTR lData); // filepath ‚ÌŠg’£q‚Å•Û‘¶Œ`®‚ğŒˆ’è
-int __stdcall CreatePictureW(LPCWSTR filepath, unsigned int flag, HLOCAL *pHBInfo, HLOCAL *pHBm, struct PictureInfo *lpInfo, SUSIE_PROGRESS progressCallback, LONG_PTR lData); // filepath ‚ÌŠg’£q‚Å•Û‘¶Œ`®‚ğŒˆ’è
+int __stdcall CreatePicture(LPCSTR filepath, unsigned int flag, HLOCAL *pHBInfo, HLOCAL *pHBm, struct PictureInfo *lpInfo, SUSIE_PROGRESS progressCallback, LONG_PTR lData); // filepath ã®æ‹¡å¼µå­ã§ä¿å­˜å½¢å¼ã‚’æ±ºå®š
+int __stdcall CreatePictureW(LPCWSTR filepath, unsigned int flag, HLOCAL *pHBInfo, HLOCAL *pHBm, struct PictureInfo *lpInfo, SUSIE_PROGRESS progressCallback, LONG_PTR lData); // filepath ã®æ‹¡å¼µå­ã§ä¿å­˜å½¢å¼ã‚’æ±ºå®š
 #endif
 
-// “®“I“Ç‚İ‚İ—p’è‹`
+// å‹•çš„èª­ã¿è¾¼ã¿ç”¨å®šç¾©
 typedef int (__stdcall *GETPLUGININFO)(int infono, LPSTR buf, int buflen);
 typedef int (__stdcall *GETPLUGININFOW)(int infono, LPWSTR buf, int buflen);
 typedef int (__stdcall *ISSUPPORTED)(LPCSTR filename, const void *dw);

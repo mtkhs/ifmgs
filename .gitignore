@@ -34,14 +34,8 @@ tmp/
 .claude/
 .serena/
 
-# Test directory
-test/
-
 # Temporary files
 *.tmp
-
-# Per-plugin runtime config (each user creates their own; not version-controlled)
-*.ini
 
 # Windows
 Thumbs.db

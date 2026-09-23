@@ -1,4 +1,5 @@
-﻿#include <windows.h>
+﻿#define NOMINMAX
+#include <windows.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
@@ -203,17 +204,20 @@ static int gsPageCountFromPath(const char* pdfPath) {
 	int pageCount = 0;
 	gs.gsapi_set_arg_encoding(inst, GS_ARG_ENCODING_UTF8);
 	if (gs.gsapi_set_stdio(inst, nullptr, stdoutFn, stderrFn) == 0) {
+		std::string pathFwd(pdfPath);
+		std::replace(pathFwd.begin(), pathFwd.end(), '\\', '/');  // PS `file` wants forward slashes
+		// SAFER blocks `file` on anything not explicitly permitted.
+		std::string permit = "--permit-file-read=" + pathFwd;
 		char* args[] = {
 			(char*)"gs",
-			(char*)"-dNOSAFER",
+			(char*)"-dSAFER",
+			(char*)permit.c_str(),
 			(char*)"-dNODISPLAY",
 			(char*)"-dBATCH",
 			(char*)"-dNOPAUSE",
 			(char*)"-dQUIET"
 		};
-		if (gs.gsapi_init_with_args(inst, 6, args) == 0) {
-			std::string pathFwd(pdfPath);
-			std::replace(pathFwd.begin(), pathFwd.end(), '\\', '/');  // PS `file` wants forward slashes
+		if (gs.gsapi_init_with_args(inst, 7, args) == 0) {
 			// `flush` is required: output is otherwise dropped on `quit`.
 			std::string psCmd = "(" + pathFwd + ") (r) file runpdfbegin pdfpagecount = flush quit";
 			int exitCode = 0;
@@ -265,17 +269,19 @@ bool getPdfPageDimensions(const std::string& pdfPath, int pageNumber, int& width
 	bool ok = false;
 	gs.gsapi_set_arg_encoding(inst, GS_ARG_ENCODING_UTF8);
 	if (gs.gsapi_set_stdio(inst, nullptr, stdoutFn, stderrFn) == 0) {
+		std::string pathFwd(pdfPath);
+		std::replace(pathFwd.begin(), pathFwd.end(), '\\', '/');
+		std::string permit = "--permit-file-read=" + pathFwd;
 		char* args[] = {
 			(char*)"gs",
-			(char*)"-dNOSAFER",
+			(char*)"-dSAFER",
+			(char*)permit.c_str(),
 			(char*)"-dNODISPLAY",
 			(char*)"-dBATCH",
 			(char*)"-dNOPAUSE",
 			(char*)"-dQUIET"
 		};
-		if (gs.gsapi_init_with_args(inst, 6, args) == 0) {
-			std::string pathFwd(pdfPath);
-			std::replace(pathFwd.begin(), pathFwd.end(), '\\', '/');
+		if (gs.gsapi_init_with_args(inst, 7, args) == 0) {
 			// Output (one per line): rotate, mb_llx, mb_lly, mb_urx, mb_ury.
 			// /Rotate defaults to 0 when absent (PDF spec).
 			std::string psCmd = "(" + pathFwd + ") (r) file runpdfbegin "
@@ -490,8 +496,11 @@ static int dsp_page(void* h, void*, int /*copies*/, int /*flush*/) {
 
 	uint8_t* dstRow = p + dataOffset;
 	const unsigned char* srcRow = ctx->pimage;
+	// resize() zero-filled the buffer, so a src stride shorter than dst leaves
+	// the padding bytes at 0 instead of reading past the row.
+	const size_t copyBytes = static_cast<size_t>(std::min(srcStride, dstStride));
 	for (int y = 0; y < ctx->height; ++y) {
-		memcpy(dstRow, srcRow, static_cast<size_t>(dstStride));
+		memcpy(dstRow, srcRow, copyBytes);
 		dstRow += dstStride;
 		srcRow += srcStride;
 	}
@@ -562,17 +571,18 @@ bool renderWithGhostscript(int dpi, int pageNumber, const std::string& inputPath
 	char firstPageStr[32];
 	char lastPageStr[32];
 	char dispFmtStr[64];
-	sprintf(dpiStr, "-r%d", dpi);
-	sprintf(firstPageStr, "-dFirstPage=%d", pageNumber);
-	sprintf(lastPageStr, "-dLastPage=%d", pageNumber);
-	sprintf(dispFmtStr, "-dDisplayFormat=%u", MGS_DISPLAY_FORMAT);
+	snprintf(dpiStr, sizeof(dpiStr), "-r%d", dpi);
+	snprintf(firstPageStr, sizeof(firstPageStr), "-dFirstPage=%d", pageNumber);
+	snprintf(lastPageStr, sizeof(lastPageStr), "-dLastPage=%d", pageNumber);
+	snprintf(dispFmtStr, sizeof(dispFmtStr), "-dDisplayFormat=%u", MGS_DISPLAY_FORMAT);
 
+	// SAFER: the input file named on the command line is readable; nothing else is.
 	std::vector<char*> args = {
 		(char*)"gs",
 		(char*)"-dBATCH",
 		(char*)"-dNOPAUSE",
 		(char*)"-dQUIET",
-		(char*)"-dNOSAFER",
+		(char*)"-dSAFER",
 		(char*)"-dTextAlphaBits=4",
 		(char*)"-dGraphicsAlphaBits=4",
 		(char*)"-dAlignToPixels=0",
