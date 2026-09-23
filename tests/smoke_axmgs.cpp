@@ -1,4 +1,4 @@
-﻿// Loads axmgs.sph and walks a two-page PDF it writes itself.
+// Loads axmgs.sph and walks a two-page PDF it writes itself.
 //
 //   smoke_axmgs <scratch dir>
 //

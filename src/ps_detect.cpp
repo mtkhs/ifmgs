@@ -1,4 +1,4 @@
-﻿#include <ps_detect.h>
+#include <ps_detect.h>
 #include <algorithm>
 #include <cctype>
 

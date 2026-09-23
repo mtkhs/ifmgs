@@ -1,4 +1,4 @@
-﻿#ifndef MGS_SUSIE_UTIL_H
+#ifndef MGS_SUSIE_UTIL_H
 #define MGS_SUSIE_UTIL_H
 
 #include <cstdint>

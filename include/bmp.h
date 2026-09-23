@@ -1,4 +1,4 @@
-﻿#ifndef MGS_BMP_H
+#ifndef MGS_BMP_H
 #define MGS_BMP_H
 
 #include <cstdint>

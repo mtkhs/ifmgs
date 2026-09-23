@@ -1,4 +1,4 @@
-﻿#ifndef MGS_PS_DETECT_H
+#ifndef MGS_PS_DETECT_H
 #define MGS_PS_DETECT_H
 
 #include <cstddef>

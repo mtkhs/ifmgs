@@ -1,4 +1,4 @@
-﻿// Loads ifmgs.sph and renders an EPS it writes itself.
+// Loads ifmgs.sph and renders an EPS it writes itself.
 //
 //   smoke_ifmgs <scratch dir>
 //

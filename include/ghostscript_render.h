@@ -1,4 +1,4 @@
-﻿#ifndef MGS_GHOSTSCRIPT_RENDER_H
+#ifndef MGS_GHOSTSCRIPT_RENDER_H
 #define MGS_GHOSTSCRIPT_RENDER_H
 
 #include <cstdint>

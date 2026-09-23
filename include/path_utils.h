@@ -1,4 +1,4 @@
-﻿#ifndef MGS_PATH_UTILS_H
+#ifndef MGS_PATH_UTILS_H
 #define MGS_PATH_UTILS_H
 
 #include <windows.h>

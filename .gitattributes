@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+# cmd.exe needs CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets
+*.svgz binary
+*.bmp  binary
+*.sph  binary

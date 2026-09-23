@@ -1,4 +1,4 @@
-﻿#include <bmp.h>
+#include <bmp.h>
 #include <windows.h>
 #include <cstdlib>
 

@@ -1,4 +1,4 @@
-﻿#include <path_utils.h>
+#include <path_utils.h>
 
 namespace Path {
 
