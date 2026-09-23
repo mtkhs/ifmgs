@@ -9,10 +9,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Static CRT: the plugins are dropped into a host's folder as-is, so they must
-# not depend on a VC++ redistributable. Ghostscript itself is loaded at runtime.
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
 if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
     message(FATAL_ERROR "ifmgs requires a 64-bit (x64) build (gsdll64.dll). Pass -A x64.")
 endif()
