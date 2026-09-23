@@ -19,12 +19,14 @@
 static const int kExpectW = 150, kExpectH = 75;
 static const size_t kExpectBmpSize = 54 + ((kExpectW * 3 + 3) & ~3) * kExpectH;
 
-// Minimal PDF with a correct xref table.
-static std::string MakePdf()
+// Minimal PDF with a correct xref table. countKey is how the page-tree's
+// /Count key is spelled; "/C#6Fu#6Et" is the same name with PDF #xx escapes,
+// which keeps the literal bytes "/Count" out of the file.
+static std::string MakePdf(const std::string& countKey = "/Count")
 {
-	const char* objs[] = {
+	const std::string objs[] = {
 		"<< /Type /Catalog /Pages 2 0 R >>",
-		"<< /Type /Pages /Kids [3 0 R 4 0 R] /Count 2 >>",
+		"<< /Type /Pages /Kids [3 0 R 4 0 R] " + countKey + " 2 >>",
 		"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 72 36] >>",
 		"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 36 72] /Rotate 90 >>",
 	};
@@ -114,6 +116,22 @@ int wmain(int argc, wchar_t** argv)
 		CHECK(bmi->biWidth == kExpectW && bmi->biHeight == kExpectH && bmi->biBitCount == 24);
 		LocalUnlock(hMem);
 		LocalFree(hMem);
+	}
+
+	// No literal "/Count" in the bytes (as with object streams in real files):
+	// the page count must come from Ghostscript under SAFER instead.
+	{
+		const std::wstring hiddenPdf = dir + L"\\hidden.pdf";
+		const std::string hiddenBytes = MakePdf("/C#6Fu#6Et");
+		CHECK(hiddenBytes.find("/Count") == std::string::npos);
+		CHECK(WriteFileBytes(hiddenPdf, hiddenBytes));
+		HLOCAL hInf2 = nullptr;
+		CHECK(getArchiveInfoW(hiddenPdf.c_str(), 0, 0, &hInf2) == SUSIEERROR_NOERROR);
+		auto* e = static_cast<SUSIE_FINFO*>(LocalLock(hInf2));
+		CHECK(e);
+		CHECK(strcmp(e[1].filename, "page002.bmp") == 0 && e[2].method[0] == '\0');
+		LocalUnlock(hInf2);
+		LocalFree(hInf2);
 	}
 
 	// Entry names longer than SUSIE_FINFO::filename are truncated, not overflowed.
